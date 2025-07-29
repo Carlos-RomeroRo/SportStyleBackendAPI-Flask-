@@ -80,6 +80,43 @@ Se implementa mediante **JWT (JSON Web Token)**.
 
 ---
 
+## 📮 Principales Endpoints (REST)
+
+### 🛍️ Productos
+
+| Método | Ruta                 | Descripción                       |
+|--------|----------------------|-----------------------------------|
+| GET    | `/api/products`      | Lista todos los productos         |
+| GET    | `/api/products/<id>` | Obtiene un producto               |
+| POST   | `/api/products`      | Crea un nuevo producto (admin)    |
+| PUT    | `/api/products/<id>` | Actualiza un producto (admin)     |
+| DELETE | `/api/products/<id>` | Elimina un producto (admin)       |
+
+### 📁 Categorías
+
+| Método | Ruta               | Descripción                |
+|--------|--------------------|----------------------------|
+| GET    | `/api/categories`  | Lista todas las categorías |
+| POST   | `/api/categories`  | Crea una nueva categoría (admin) |
+
+### 👤 Usuarios
+
+| Método | Ruta                | Descripción                    |
+|--------|---------------------|--------------------------------|
+| POST   | `/api/register`     | Registro de usuarios           |
+| POST   | `/api/login`        | Login y generación de JWT      |
+| GET    | `/api/user/profile` | Perfil del usuario (con token) |
+
+### 🧾 Órdenes
+
+| Método | Ruta             | Descripción                           |
+|--------|------------------|---------------------------------------|
+| GET    | `/api/orders`    | Ver órdenes del usuario logueado      |
+| POST   | `/api/orders`    | Crear nueva orden                     |
+| GET    | `/api/orders/all`| Ver todas las órdenes (admin)         |
+
+---
+
 ## 🧪 Testing
 
 - Pruebas unitarias con **pytest**.
