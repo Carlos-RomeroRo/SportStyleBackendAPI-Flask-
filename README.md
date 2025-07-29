@@ -1,3 +1,167 @@
+# 🏬 SportStyle - Backend API
+
+SportStyle es una API RESTful desarrollada con Flask para gestionar el catálogo, inventario y operaciones de una tienda de ropa deportiva. Está diseñada para manejar productos, usuarios, pedidos y autenticación mediante JWT.
+
+---
+
+## 🎯 Objetivo General
+
+Desarrollar una API RESTful con Flask que gestione el catálogo, inventario y operaciones de una tienda de ropa deportiva (camisas, pantalones, medias, zapatos y accesorios), permitiendo operaciones CRUD, gestión de stock, categorías y pedidos.
+
+---
+
+## 📦 Alcance del Proyecto
+
+La API permite:
+
+- Registrar y consultar productos deportivos.
+- Gestionar categorías y subcategorías.
+- Controlar inventario disponible por producto.
+- Manejar usuarios (clientes y administradores).
+- Procesar órdenes de compra (simulación).
+- Llevar un historial básico de transacciones.
+- Autenticación básica mediante JSON Web Tokens (JWT).
+
+
+---
+
+## 🧩 Modelado de Datos
+
+### 🔹 Producto
+- `id`: int
+- `nombre`: string
+- `descripcion`: string
+- `precio`: float
+- `stock`: int
+- `categoria_id`: FK
+- `talla`: string (opcional)
+- `color`: string
+
+### 🔹 Categoría
+- `id`: int
+- `nombre`: string
+- `descripcion`: string
+
+### 🔹 Usuario
+- `id`: int
+- `nombre`: string
+- `email`: string
+- `password_hash`: string
+- `rol`: string (`admin` / `cliente`)
+
+### 🔹 Orden
+- `id`: int
+- `usuario_id`: FK
+- `productos`: lista de productos con cantidad
+- `total`: float
+- `fecha`: datetime
+- `estado`: string (`pendiente`, `pagado`, `enviado`)
+
+### 🔹 Order Item
+- `id`: int
+- `order_id`: FK
+- `product_id`: FK
+- `cantidad`: int
+
+---
+
+## 🔐 Autenticación y Autorización
+
+Se implementa mediante **JWT (JSON Web Token)**.
+
+- **Administradores** pueden:
+  - Crear, actualizar y eliminar productos.
+  - Ver todas las órdenes.
+
+- **Clientes** pueden:
+  - Ver productos.
+  - Crear una orden.
+  - Consultar sus órdenes.
+
+---
+
+## 📮 Principales Endpoints (REST)
+
+### 🛍️ Productos
+
+| Método | Ruta                 | Descripción                       |
+|--------|----------------------|-----------------------------------|
+| GET    | `/api/products`      | Lista todos los productos         |
+| GET    | `/api/products/<id>` | Obtiene un producto               |
+| POST   | `/api/products`      | Crea un nuevo producto (admin)    |
+| PUT    | `/api/products/<id>` | Actualiza un producto (admin)     |
+| DELETE | `/api/products/<id>` | Elimina un producto (admin)       |
+
+### 📁 Categorías
+
+| Método | Ruta               | Descripción                |
+|--------|--------------------|----------------------------|
+| GET    | `/api/categories`  | Lista todas las categorías |
+| POST   | `/api/categories`  | Crea una nueva categoría (admin) |
+
+### 👤 Usuarios
+
+| Método | Ruta                | Descripción                    |
+|--------|---------------------|--------------------------------|
+| POST   | `/api/register`     | Registro de usuarios           |
+| POST   | `/api/login`        | Login y generación de JWT      |
+| GET    | `/api/user/profile` | Perfil del usuario (con token) |
+
+### 🧾 Órdenes
+
+| Método | Ruta             | Descripción                           |
+|--------|------------------|---------------------------------------|
+| GET    | `/api/orders`    | Ver órdenes del usuario logueado      |
+| POST   | `/api/orders`    | Crear nueva orden                     |
+| GET    | `/api/orders/all`| Ver todas las órdenes (admin)         |
+
+---
+
+## 🧪 Testing
+
+- Pruebas unitarias con **pytest**.
+- Mockeo de servicios y base de datos.
+- Casos de prueba para:
+  - Modelos
+  - Servicios
+  - Rutas (Endpoints)
+
+---
+
+## 🧱 Base de Datos
+
+- **PostgreSQL** (producción) o **SQLite** (local/desarrollo)
+- ORM: **SQLAlchemy**
+- Migraciones: **Flask-Migrate** o **Alembic**
+- Relaciones bien definidas entre productos, categorías, usuarios y órdenes.
+
+---
+
+## 🔧 Herramientas y Librerías Clave
+
+- **Flask**
+- **Flask-RESTful** o **Flask-Router**
+- **Flask-JWT-Extended**
+- **SQLAlchemy**
+- **Marshmallow**
+- **Flask-Migrate**
+- **Pytest**
+
+---
+
+## 🚀 Ejecución con Docker
+
+### Requisitos:
+
+- Docker y Docker Compose instalados
+
+### Pasos:
+
+```bash
+docker-compose down -v          # Elimina contenedores y volúmenes antiguos
+docker-compose build            # Construye las imágenes
+docker-compose up               # Inicia la aplicación
+
 # Inicio de la Aplicación con Docker
 
 Este proyecto utiliza Docker y Docker Compose para facilitar el despliegue de la aplicación y sus servicios (como la base de datos). A continuación, encontrarás las instrucciones para configurarla y ejecutarla correctamente.
