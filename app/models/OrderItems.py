@@ -1,6 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from app.config import db
 
 class OrderItem(db.Model):
     __tablename__ = 'order_items'
@@ -10,4 +8,6 @@ class OrderItem(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
 
-    product = db.relationship('Product') 
+    product = db.relationship('Product', back_populates='order_items') 
+    order = db.relationship('Order', back_populates='items')
+    

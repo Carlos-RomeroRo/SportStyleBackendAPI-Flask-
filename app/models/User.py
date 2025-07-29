@@ -1,7 +1,5 @@
 import enum
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from app.config import db
 
 class UserRole(enum.Enum):
     ADMIN = "admin"

@@ -1,7 +1,9 @@
-Flask==2.3.2
-psycopg2-binary==2.9.6
-python-dotenv==1.0.0
-Flask-SQLAlchemy==2.5.1
-Flask-Migrate==4.0.5
-requests==2.31.0
-flask-marshmallow==0.15.0
+Flask>=2.3.2,<3.0
+Flask-SQLAlchemy>=3.1.1,<4.0
+Flask-Marshmallow>=0.15.0,<1.0
+marshmallow>=3.19.0,<4.0
+marshmallow-sqlalchemy>=0.27.0,<1.0
+psycopg2-binary>=2.9.0,<3.0
+python-dotenv>=1.0.0,<2.0
+SQLAlchemy>=2.0,<3.0
+marshmallow-enum==1.5.1

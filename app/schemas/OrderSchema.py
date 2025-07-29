@@ -1,9 +1,11 @@
-from flask_marshmallow import Marshmallow
-from models.Order import Order  
 
-ma = Marshmallow()
+from marshmallow_enum import EnumField
+from app.models.Order import Order, OrderStatus  
+from app.config import ma
 
 class OrderSchema(ma.SQLAlchemyAutoSchema):
+
+    status = EnumField(OrderStatus, by_value=True)  # Agrega esta línea
     class Meta:
         model = Order
         load_instance = True

@@ -1,11 +1,9 @@
-from flask_marshmallow import Marshmallow
-from models.OrderItems import OrderItems  
-
-ma = Marshmallow()
+from app.models.OrderItems import OrderItem 
+from app.config import ma
 
 class OrderItemSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = OrderItems
+        model = OrderItem
         load_instance = True
         include_fk = True
 

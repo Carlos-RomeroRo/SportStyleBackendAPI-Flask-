@@ -1,5 +1,5 @@
-from models.Order import db, Order
-from schemas.OrderSchema import order_schema, orders_schema 
+from app.models.Order import db, Order
+from app.schemas.OrderSchema import order_schema, orders_schema 
 from flask import abort
 
 def create_order(order):
@@ -9,9 +9,11 @@ def create_order(order):
         db.session.commit()
         return order_schema.dump(order)
     except Exception as e:
-        print(e)
-        abort(400, description="Error creating order")
-
+        import traceback
+        traceback.print_exc()  # <--- imprime la traza completa
+        print(e)               # <--- imprime el mensaje de error
+        abort(400, description=str(e))  # <--- muestra el error real al cliente
+        
 def get_order_by_id(order_id):
     order = Order.query.get(order_id)
     if not order:
@@ -28,8 +30,8 @@ def update_order(order_id, order_data):
         abort(404, description="Order not found")
     try:
         update_data = order_schema.load(order_data, session=db.session, partial=True)
-        for attr in order_data:
-            setattr(order, attr, getattr(update_data, attr))
+        for attr, value in update_data.__dict__.items():
+            setattr(order, attr, value)
         db.session.commit()
         return order_schema.dump(order)
     except Exception as e:
