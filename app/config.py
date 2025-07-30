@@ -5,6 +5,7 @@ from flask_marshmallow import Marshmallow
 from dotenv import load_dotenv
 from sqlalchemy.orm import DeclarativeBase
 
+
 db = SQLAlchemy()
 ma = Marshmallow()
 
@@ -23,7 +24,6 @@ def create_app():
     db.init_app(app)
     ma.init_app(app)
 
-    # ✅ Importar modelos en orden correcto
     
     from app.models.Category import Category
     from app.models.Product import Product
