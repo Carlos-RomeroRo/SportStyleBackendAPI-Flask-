@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from dotenv import load_dotenv
 from sqlalchemy.orm import DeclarativeBase
+from flask_jwt_extended import JWTManager
+from datetime import timedelta
 
 
 db = SQLAlchemy()
@@ -20,6 +22,9 @@ def create_app():
 
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=30)
+    jwt = JWTManager(app)
 
     db.init_app(app)
     ma.init_app(app)
@@ -50,6 +55,9 @@ def create_app():
 
     from app.routes.OrderItemsRoute import order_items_bp
     app.register_blueprint(order_items_bp, url_prefix="/api/order-item") 
+
+    from app.routes.Login import auth_bp
+    app.register_blueprint(auth_bp, url_prefix="/api/login") 
     
 
     

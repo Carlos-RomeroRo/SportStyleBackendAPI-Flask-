@@ -7,3 +7,4 @@ psycopg2-binary>=2.9.0,<3.0
 python-dotenv>=1.0.0,<2.0
 SQLAlchemy>=2.0,<3.0
 marshmallow-enum==1.5.1
+Flask-JWT-Extended==4.6.0 #new dependecy for JWT authentication

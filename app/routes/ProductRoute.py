@@ -1,4 +1,6 @@
 from flask import Blueprint, jsonify, request
+from flask_jwt_extended import jwt_required
+from app.decorators.role_required import role_required
 from app.services.ProductService import (
     create_product,
     get_product_by_id,
@@ -8,13 +10,19 @@ from app.services.ProductService import (
 )
 
 product_bp = Blueprint('product_bp', __name__)
+
+
 @product_bp.route('/create', methods=['POST'])
+@jwt_required()
+@role_required("admin","superadmin")
 def create_product_route():
     product_data = request.get_json()
     product = create_product(product_data)
     return jsonify(product), 201
 
 @product_bp.route('/getById/<int:product_id>', methods=['GET'])
+@jwt_required()
+@role_required("superadmin")
 def get_product_by_id_route(product_id):
     product = get_product_by_id(product_id)
     if product:
@@ -22,6 +30,8 @@ def get_product_by_id_route(product_id):
     return jsonify({"message": "Product not found"}), 404
 
 @product_bp.route('/updateById/<int:product_id>', methods=['PUT'])
+@jwt_required()
+@role_required("admin","superadmin")
 def update_product_route(product_id):
     product_data = request.get_json()
     product = update_product(product_id, product_data)
@@ -30,6 +40,8 @@ def update_product_route(product_id):
     return jsonify({"message": "Product not found"}), 404
 
 @product_bp.route('/delete_product/<int:product_id>', methods=['DELETE'])
+@jwt_required()
+@role_required("superadmin")
 def delete_product_route(product_id):
     success = delete_product(product_id)
     if success:
@@ -37,6 +49,7 @@ def delete_product_route(product_id):
     return jsonify({"message": "Product not found"}), 404
 
 @product_bp.route('/getAll', methods=['GET'])
+@jwt_required()
 def get_all_products_route():
     products = get_all_products()
     return jsonify(products), 200
